@@ -22,7 +22,8 @@ import com.example.iot_application.allscreens.Screens
 // TODO: 10.11.2021 ИЗМЕНИТЬ НА НОРМАЛЬНЫЙ ЭЛЕМЕНТ НАВИГАЦИИ
 @Composable
 fun NavigationBar(
-    navController: NavController
+    navController: NavController,
+    //iotToken: String
 ) {
 
 
@@ -75,7 +76,11 @@ fun NavigationBar(
                         //.fillMaxWidth()
                         .width(100.dp)
                         .clickable {
-                            navController.navigate(Screens.JournalsScreen.route)
+                            navController.navigate(Screens.JournalScreen.route)
+//                            navController.navigate(
+//                                "journal/${iotToken}",
+//                                )
+
                         }
                 ) {
                     Text(

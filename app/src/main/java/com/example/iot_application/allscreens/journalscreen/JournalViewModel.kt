@@ -1,4 +1,4 @@
-package com.example.iot_application.allscreens.usersscreen
+package com.example.iot_application.allscreens.journalscreen
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class UsersViewModel @Inject constructor(
+class JournalViewModel @Inject constructor(
 
-): ViewModel() {
+) : ViewModel(){
 }

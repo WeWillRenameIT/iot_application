@@ -9,12 +9,17 @@ import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.iot_application.allscreens.Screens
+import com.example.iot_application.allscreens.authorisescreen.AuthoriseScreen
+import com.example.iot_application.allscreens.authorisescreen.AuthoriseScreenState
 import com.example.iot_application.allscreens.navigation.NavigationBar
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
 
 @AndroidEntryPoint
@@ -29,7 +34,7 @@ class MainActivity : ComponentActivity() {
 
             val navController = rememberNavController()
 
-            NavHost(navController = navController, startDestination = Screens.AuthoriseScreen.route) {
+            NavHost(navController = navController, startDestination = Screens.JournalScreen.withArgs("df")) {
                 composable(route = Screens.AuthoriseScreen.route ) {
                     Box(
                         contentAlignment = Alignment.Center,
@@ -45,16 +50,10 @@ class MainActivity : ComponentActivity() {
                                 .padding(start = 5.dp, end = 5.dp, top = 5.dp)
                         ) {
                             Column() {
-                                Text(text = "АВТОРИЗАЦИЯ")
+
+                                AuthoriseScreenState(navController = navController)
                             }
 
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.BottomCenter),
-                        ) {
-                            NavigationBar(navController = navController)
                         }
 
                     }
@@ -122,7 +121,19 @@ class MainActivity : ComponentActivity() {
                     }
 
                 }
-                composable(route = Screens.JournalsScreen.route) {
+                composable(
+                    route = Screens.JournalScreen.route + "/{iotToken}",
+                    arguments = listOf(
+                        navArgument("iotToken") {
+                            type = NavType.StringType
+                            //defaultValue = ""
+                            nullable = true
+                        }
+                    )
+
+                ) {
+
+                        //entry ->
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -137,7 +148,7 @@ class MainActivity : ComponentActivity() {
                                 .padding(start = 5.dp, end = 5.dp, top = 5.dp)
                         ) {
                             Column() {
-                                Text(text = "ЖУРНАЛ")
+                                Text( text = " df") //text = entry.arguments?.getString("iotToken")!!)
                             }
 
                         }
@@ -146,7 +157,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier
                                 .align(Alignment.BottomCenter),
                         ) {
-                            NavigationBar(navController = navController)
+                            NavigationBar(navController = navController) //iotToken = entry.arguments?.getString("iotToken")!!)
                         }
 
                     }

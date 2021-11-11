@@ -1,7 +1,11 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
+
+
 
 android {
     compileSdk 31
@@ -64,6 +68,8 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 
 
+
+    implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.navigation:navigation-compose:2.4.0-alpha10"
 
     //retrofit
@@ -82,15 +88,40 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0"
 
     //Dagger - Hilt
-    implementation 'com.google.dagger:dagger-android:2.40'
-    implementation 'com.google.dagger:dagger-android-support:2.40' // if you use the support libraries
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.40'
 
 
-    // implementation "com.google.dagger:hilt-android:2.40"
-    //kapt "com.google.dagger:hilt-android-compiler:2.40"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
-    //kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
-    implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha01'
+    implementation 'com.google.dagger:hilt-android:2.40'
+    kapt 'com.google.dagger:hilt-compiler:2.40'
 
+    // For instrumentation tests
+    androidTestImplementation  'com.google.dagger:hilt-android-testing:2.40'
+    kaptAndroidTest 'com.google.dagger:hilt-compiler:2.40'
+
+    // For local unit tests
+    testImplementation 'com.google.dagger:hilt-android-testing:2.40'
+    kaptTest 'com.google.dagger:hilt-compiler:2.40'
+
+   // kapt("groupId:artifactId:version")
+
+
+
+
+
+
+
+//    implementation 'com.google.dagger:dagger-android:2.40'
+//    implementation 'com.google.dagger:dagger-android-support:2.40' // if you use the support libraries
+//    annotationProcessor 'com.google.dagger:dagger-android-processor:2.40'
+//
+//
+//    // implementation "com.google.dagger:hilt-android:2.40"
+//    kapt "com.google.dagger:hilt-android-compiler:2.40"
+//    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+//    kapt "androidx.hilt:hilt-compiler:1.0.0-beta01"
+      implementation 'androidx.hilt:hilt-navigation-compose:1.0.0-alpha03'
+
+
+}
+kapt {
+    correctErrorTypes true
 }
