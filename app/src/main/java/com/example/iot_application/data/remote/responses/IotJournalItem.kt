@@ -7,6 +7,6 @@ data class IotJournalItem(
     val Fio: String,
     val Id: Int,
     val Results: String,
-    val Timestamp: Timestamp,
+    val Timestamp: String,
     val User_id: Int
 )
