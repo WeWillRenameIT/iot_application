@@ -1,5 +1,6 @@
 package com.example.iot_application.allscreens.authorisescreen
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -14,11 +15,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.example.iot_application.allscreens.Screens
+import com.example.iot_application.allscreens.navigation.saveToken
 import kotlinx.coroutines.runBlocking
 
 @Composable
 fun AuthoriseScreenState(
     navController: NavController,
+    prefs: SharedPreferences,
     viewModel: AuthoriseViewModel = hiltViewModel()
 
 ) {
@@ -35,17 +38,24 @@ fun AuthoriseScreenState(
         password = password,
         iotToken = iotToken,
         passwordVisibility = passwordVisibility,
-        fnLogin = {login = it},
-        fnPassword = {password = it},
-        fnPasswordVisibility = {passwordVisibility = !passwordVisibility},
+        fnLogin = { login = it },
+        fnPassword = { password = it },
+        fnPasswordVisibility = { passwordVisibility = !passwordVisibility },
         fnButton = {
-                        runBlocking {
-                            iotToken = if (viewModel.postAuthorise(login,password).data != null) viewModel.postAuthorise(login,password).data!!.token else ""
+            runBlocking {
+                iotToken = if (viewModel.postAuthorise(
+                        login,
+                        password
+                    ).data != null
+                ) viewModel.postAuthorise(login, password).data!!.token else ""
 
-                        }
-                        if (iotToken != "") navController.navigate(Screens.JournalScreen.withArgs(iotToken))
-                   },
+            }
+            if (iotToken != "") {
+                saveToken(token = iotToken, prefs = prefs)
+                navController.navigate(Screens.JournalScreen.withArgs(iotToken))
+            }
+        },
     )
-    Log.e("ASS -> ", "login: $login password: $password token: $iotToken" )
+    Log.e("ASS -> ", "login: $login password: $password token: $iotToken")
 
 }

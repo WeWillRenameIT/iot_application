@@ -35,7 +35,7 @@ fun NavigationBar(
 ) {
 
     BottomNavigation(
-        backgroundColor = Color(0xFFEE6E73),
+        backgroundColor = Color(0xFF0D47A1),
         contentColor = Color(0xFFFFFFFF)
 
     ) {

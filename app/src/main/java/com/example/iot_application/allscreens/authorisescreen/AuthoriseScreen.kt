@@ -45,9 +45,9 @@ fun AuthoriseScreen(
             label = { Text("Login") },
             placeholder = { Text("Login") },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFEE6E73),
-                backgroundColor = Color(0xFFFFEBEB),
-                focusedLabelColor = Color(0xFFEE6E73),
+                focusedBorderColor = Color(0xFF0D47A1),
+                backgroundColor = Color(0xFFC3DAFF),
+                focusedLabelColor = Color(0xFF0D47A1),
 
             ),
             modifier = Modifier.width(IntrinsicSize.Max)
@@ -71,9 +71,9 @@ fun AuthoriseScreen(
                 }
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = Color(0xFFEE6E73),
-                backgroundColor = Color(0xFFFFEBEB),
-                focusedLabelColor = Color(0xFFEE6E73),
+                focusedBorderColor = Color(0xFF0D47A1),
+                backgroundColor = Color(0xFFC3DAFF),
+                focusedLabelColor = Color(0xFF0D47A1),
 
                 )
 
@@ -82,8 +82,8 @@ fun AuthoriseScreen(
         Button(
             onClick = fnButton,
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color(0xFFEE6E73),
-                contentColor = Color(0xFFFFFFFF),
+                backgroundColor = Color(0xFF0D47A1),
+                contentColor = Color(0xFFC3DAFF),
             ),
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)

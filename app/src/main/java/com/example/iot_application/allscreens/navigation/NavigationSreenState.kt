@@ -1,5 +1,7 @@
 package com.example.iot_application.allscreens.navigation
 
+import android.content.SharedPreferences
+import android.util.Log
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -7,27 +9,38 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.iot_application.allscreens.InfoScreen
 import com.example.iot_application.allscreens.Screens
 import com.example.iot_application.allscreens.authorisescreen.AuthoriseScreenState
 import com.example.iot_application.allscreens.codelocksscreen.CodeLocksScreenState
+import com.example.iot_application.allscreens.infoscreen.InfoViewState
 import com.example.iot_application.allscreens.journalscreen.JournalScreenState
 import com.example.iot_application.allscreens.usersscreen.UsersScreenState
 
 @Composable
-fun NavigationScreenState() {
+fun NavigationScreenState(
+    prefs: SharedPreferences,
+    navController: NavHostController
+) {
 
-    val navController = rememberNavController()
     var selectedScreen by remember { mutableStateOf(2) }
-    var iotToken by remember { mutableStateOf("test") }
+    var iotToken by remember { mutableStateOf("") }
+
+    //saveToken("", prefs)
+    iotToken = getToken(prefs)
+
+    Log.e("NSS-3 -> ", "$iotToken")
 
     Scaffold(
         bottomBar = {
-            if(iotToken!= "test")
+            if(iotToken!= "")
             NavigationBar(
                 fnPeople = {
                     selectedScreen = 1
@@ -58,7 +71,17 @@ fun NavigationScreenState() {
             composable(
                 route = Screens.AuthoriseScreen.route
             ) {
-                AuthoriseScreenState(navController = navController)
+
+                Log.e("NSS -> 1: ", "save token: $iotToken")
+                if(getToken(prefs)=="") {
+                    iotToken=""
+                    selectedScreen = 2
+                    AuthoriseScreenState(navController = navController, prefs = prefs)
+                }
+                else {
+                    JournalScreenState(iotToken)
+                }
+
             }
 
             composable(
@@ -110,8 +133,22 @@ fun NavigationScreenState() {
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                Text("Проект для IOT\nГруппа: ИВБО-05-18\nПередерий Владимир\nИваннов Дмитрий\nМурашев Александр\nКапырин Константин\nЧернышев Владислав")
+                InfoViewState( navController = navController, prefs = prefs)
             }
         }
     }
+}
+
+
+
+fun saveToken(token: String, prefs: SharedPreferences)
+{
+    val editor = prefs.edit()
+    editor.putString ("token", token).apply()
+}
+
+
+fun getToken(prefs: SharedPreferences) : String
+{
+    return prefs.getString("token", "")!!
 }
