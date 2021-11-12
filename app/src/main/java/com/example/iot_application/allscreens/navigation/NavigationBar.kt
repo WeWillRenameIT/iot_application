@@ -51,11 +51,9 @@ fun NavigationBar(
             selected = (selectedScreen == 2),
             onClick = fnList
         )
-        BottomNavigationItem(
-            label = {},
-            icon = { Icon(painter = painterResource(id = R.drawable.iot2) , contentDescription = null,modifier = Modifier.padding(top = 5.dp)) },
-            selected = false,
-            onClick = {}
+        Image(
+            painter = painterResource(id = R.drawable.iot3),
+            contentDescription = "",
 
         )
         BottomNavigationItem(
