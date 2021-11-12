@@ -78,11 +78,11 @@ fun UserScreenRow(
                     }
 
                     Text(
-                        text = "$role",
+                        text = if(role==2) "Администратор" else if(role==1) "Модератор" else "Работник",
                         fontWeight = FontWeight(500),
                         fontFamily = FontFamily.SansSerif,
                         fontSize = 14.sp,
-                        modifier = Modifier.weight(6f)
+                        modifier = Modifier.weight(8f)
 
                     )
 
