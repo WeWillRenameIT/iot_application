@@ -40,7 +40,7 @@ fun AuthoriseScreenState(
         fnPasswordVisibility = {passwordVisibility = !passwordVisibility},
         fnButton = {
                         runBlocking {
-                            iotToken = if (viewModel.postAuthorise(login,password).data != null) viewModel.postAuthorise(login,password).data!!.Token else ""
+                            iotToken = if (viewModel.postAuthorise(login,password).data != null) viewModel.postAuthorise(login,password).data!!.token else ""
 
                         }
                         if (iotToken != "") navController.navigate(Screens.JournalScreen.withArgs(iotToken))

@@ -9,7 +9,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.iot_application.allscreens.journalscreen.JournalScreenRow
 import kotlinx.coroutines.runBlocking
 
 
@@ -41,7 +40,7 @@ fun UsersScreenState(
                 UserScreenRow(
                     id = it+1,
                     role = usersList[it].Role,
-                    username = usersList[it].Username
+                    username = usersList[it].Fio
                 )
             }
             items(1)

@@ -40,7 +40,7 @@ class AuthoriseViewModel @Inject constructor(
         Log.e("AVM -> ", "login: $login password: $password")
         Log.e("AVM -> ", jsonObjectString)
         Log.e("AVM -> ", "message: ${newIotToken.message}")
-        Log.e("AVM -> ", "token: ${newIotToken.data?.Token}")
+        Log.e("AVM -> ", "token: ${newIotToken.data?.token}")
 
         return newIotToken
     }

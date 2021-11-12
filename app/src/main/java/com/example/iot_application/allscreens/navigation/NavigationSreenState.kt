@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -41,6 +40,10 @@ fun NavigationScreenState() {
                 fnLock = {
                     selectedScreen = 3
                     navController.navigate(Screens.CodeLocksScreen.withArgs(iotToken))
+                },
+                fnInfo = {
+                    selectedScreen = 4
+                    navController.navigate(Screens.InfoScreen.withArgs(iotToken))
                 },
                 selectedScreen = selectedScreen
             )
@@ -95,6 +98,19 @@ fun NavigationScreenState() {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
                 CodeLocksScreenState(iotToken)
+            }
+
+            composable(
+                route = Screens.InfoScreen.route + "/{iotToken}",
+                arguments = listOf(
+                    navArgument("iotToken") {
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                    entry ->
+                iotToken = entry.arguments?.getString("iotToken")!!
+                Text("Проект для IOT\nГруппа: ИВБО-05-18\nПередерий Владимир\nИваннов Дмитрий\nМурашев Александр\nКапырин Константин\nЧернышев Владислав")
             }
         }
     }

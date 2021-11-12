@@ -3,7 +3,6 @@ package com.example.iot_application.allscreens.usersscreen
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.iot_application.data.remote.responses.IotJournalItem
 import com.example.iot_application.data.remote.responses.IotUsersItem
 import com.example.iot_application.repository.IotRepository
 import com.example.iot_application.util.Resource
@@ -38,7 +37,7 @@ class UsersViewModel @Inject constructor(
                 //endReached.value = curPage * PAGE_SIZE >= result.data!!.count
                 val usersEntries = result.data!!.mapIndexed { index, entry ->
                     val id = entry.Id
-                    val username = entry.Username
+                    val username = entry.Fio
                     val role = entry.Role
                     IotUsersItem(id, role, username)
                 }

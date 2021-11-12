@@ -9,6 +9,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -39,10 +40,20 @@ fun AuthoriseScreen(
         ) {
 
         TextField(
-            value = login, 
+            value = login,
             onValueChange = fnLogin,
+            label = { Text("Login") },
+            placeholder = { Text("Login") },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color(0xFFEE6E73),
+                backgroundColor = Color(0xFFFFEBEB),
+                focusedLabelColor = Color(0xFFEE6E73),
+
+            ),
             modifier = Modifier.width(IntrinsicSize.Max)
+
         )
+
         Spacer(modifier = Modifier.align(Alignment.End).height(8.dp))
         TextField(
             value = password,
@@ -55,16 +66,29 @@ fun AuthoriseScreen(
                 val image = if (passwordVisibility)
                     Icons.Filled.Visibility
                 else Icons.Filled.VisibilityOff
-
                 IconButton(onClick = fnPasswordVisibility) {
                     Icon(imageVector  = image, "")
                 }
-            }
+            },
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Color(0xFFEE6E73),
+                backgroundColor = Color(0xFFFFEBEB),
+                focusedLabelColor = Color(0xFFEE6E73),
+
+                )
+
         )
         Spacer(modifier = Modifier.align(Alignment.End).height(8.dp))
         Button(
             onClick = fnButton,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = Color(0xFFEE6E73),
+                contentColor = Color(0xFFFFFFFF),
+            ),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .height(50.dp)
+                .width(200.dp)
         ) {
             Text(text = "Авторизация")
         }
