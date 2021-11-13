@@ -22,16 +22,17 @@ fun InfoScreen(
 ) {
 
     Column(
-        modifier = Modifier.padding(20.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
     ) {
-
 
         Surface(
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier
                 .shadow(5.dp, RoundedCornerShape(10.dp))
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(220.dp)
                 .background(Color.White)
                 .padding(15.dp)
 

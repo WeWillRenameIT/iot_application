@@ -1,15 +1,20 @@
 package com.example.iot_application.allscreens.journalscreen
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -46,7 +51,7 @@ fun JournalScreenRow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(20f)
+                    .weight(24f)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -67,33 +72,59 @@ fun JournalScreenRow(
 
                     }
                     Column(
-                        verticalArrangement = Arrangement.Center,
-                        //horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.weight(15f)
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(15f)
                     ) {
-                        Text(
-                            text = codeLockName,
-                            fontWeight = FontWeight(500),
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 14.sp
+                        //Row(modifier = Modifier.weight(1.5f)) {}
+                        Row(
+                            modifier = Modifier
+                                .weight(7.2f)
 
-                        )
-                        Text(
-                            text = fio,
-                            fontWeight = FontWeight(500),
-                            fontFamily = FontFamily.SansSerif,
-                            fontSize = 12.sp
-                        )
+                        ) {
+                            Text(
+                                text = "Где: $codeLockName",
+                                fontWeight = FontWeight(500),
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 12.sp,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        }
+                        Divider(color = Color.Black, thickness = 1.dp, modifier = Modifier
+                            .weight(0.6f)
+                            .padding(top = 1.dp, bottom = 1.dp))
+                        Row(
+                            modifier = Modifier
+                                .weight(7.2f)
+                        ) {
+
+                            Text(
+                                text = "Kтo: ${if(fio!="") fio else "Неизвестно"}",
+                                fontWeight = FontWeight(500),
+                                fontFamily = FontFamily.SansSerif,
+                                fontSize = 12.sp,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+
+                        }
+
                     }
 
-                    Text(
-                        text = timestamp,
-                        fontWeight = FontWeight(500),
-                        fontFamily = FontFamily.SansSerif,
-                        fontSize = 14.sp,
-                        modifier = Modifier.weight(6f)
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(7f)
+                    ) {
+                        Text(
+                            text = timestamp,
+                            fontWeight = FontWeight(500),
+                            fontFamily = FontFamily.SansSerif,
+                            fontSize = 12.sp,
+                            modifier = Modifier.width(70.dp)
 
-                    )
+                        )
+                    }
 
                 }
             }
@@ -115,5 +146,5 @@ fun JournalScreenRow(
 @Preview
 @Composable
 fun prew3() {
-    JournalScreenRow(id = 1, userId = 2, codeLockName = "Дверь 1", fio = "Иван Иванович Иванов", timestamp = "2021-07-01 06:30:30", result = "Удачно")
+    JournalScreenRow(id = 1, userId = 2, codeLockName = "Кодовый замок у передней двери школы номер 10 восточного крыла", fio = "Кто: Чернышев Владислав Венианимович", timestamp = "2021-07-01 06:30:30", result = "Удачно")
 }
