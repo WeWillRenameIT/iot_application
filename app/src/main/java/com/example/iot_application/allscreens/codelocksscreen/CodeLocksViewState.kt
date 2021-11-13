@@ -9,14 +9,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.iot_application.allscreens.Screens
 import com.example.iot_application.allscreens.journalscreen.JournalScreenRow
 import com.example.iot_application.allscreens.journalscreen.JournalViewModel
+import com.example.iot_application.allscreens.journalscreen.PlusUserView
 import kotlinx.coroutines.runBlocking
 
 @Composable
 fun CodeLocksScreenState(
     iotToken: String,
-    viewModel: CodeLocksViewModel = hiltViewModel()
+    viewModel: CodeLocksViewModel = hiltViewModel(),
+    navController: NavHostController
 
 ) {
     val codeLocksList by remember { viewModel.codeLocksList }
@@ -41,7 +45,10 @@ fun CodeLocksScreenState(
             CodeLockScreenRow(
                 id = it+1,
                 name = codeLocksList[it].Name,
-                description = codeLocksList[it].Description
+                description = codeLocksList[it].Description,
+                fnButton = {
+                    navController.navigate(Screens.DetailCodeLockScreen.withArgs(iotToken))
+                }
             )
         }
         items(1)
@@ -50,7 +57,8 @@ fun CodeLocksScreenState(
         }
 
     }
-
+    // TODO: 13.11.2021 Добавление замка
+    PlusUserView({ })
 
     Log.e("JSS -> ", codeLocksList.toString())
 

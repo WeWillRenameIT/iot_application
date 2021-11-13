@@ -20,6 +20,7 @@ import com.example.iot_application.allscreens.InfoScreen
 import com.example.iot_application.allscreens.Screens
 import com.example.iot_application.allscreens.authorisescreen.AuthoriseScreenState
 import com.example.iot_application.allscreens.codelocksscreen.CodeLocksScreenState
+import com.example.iot_application.allscreens.detailcodelockscreen.DetailUserViewState
 import com.example.iot_application.allscreens.infoscreen.InfoViewState
 import com.example.iot_application.allscreens.journalscreen.JournalScreenState
 import com.example.iot_application.allscreens.usersscreen.UsersScreenState
@@ -94,7 +95,7 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                UsersScreenState(iotToken)
+                //UsersScreenState(iotToken = iotToken,navController = navController)
 
             }
             composable(
@@ -120,7 +121,7 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                CodeLocksScreenState(iotToken)
+                //CodeLocksScreenState(iotToken = iotToken, navController = navController)
             }
 
             composable(
@@ -135,6 +136,33 @@ fun NavigationScreenState(
                 iotToken = entry.arguments?.getString("iotToken")!!
                 InfoViewState( navController = navController, prefs = prefs)
             }
+
+            composable(
+                route = Screens.DetailUserScreen.route + "/{iotToken}",
+                arguments = listOf(
+                    navArgument("iotToken") {
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                    entry ->
+                iotToken = entry.arguments?.getString("iotToken")!!
+                DetailUserViewState()
+            }
+
+            composable(
+                route = Screens.DetailUserScreen.route + "/{iotToken}",
+                arguments = listOf(
+                    navArgument("iotToken") {
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                    entry ->
+                iotToken = entry.arguments?.getString("iotToken")!!
+                DetailUserViewState()
+            }
+
         }
     }
 }

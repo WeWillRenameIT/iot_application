@@ -1,6 +1,7 @@
 package com.example.iot_application.allscreens.usersscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -21,6 +22,7 @@ fun UserScreenRow(
     id: Int,
     role: Int,
     username: String,
+    fnButton: ()->Unit
 ) {
     Surface(
         shape = RoundedCornerShape(10.dp),
@@ -29,6 +31,8 @@ fun UserScreenRow(
             .fillMaxWidth()
             .height(70.dp)
             .background(Color.White)
+            .clickable { fnButton }
+
 
     ) {
         Row(
@@ -97,17 +101,17 @@ fun UserScreenRow(
 @Preview
 @Composable
 fun prew3() {
-    UserScreenRow(id = 1, role = 0, username = "Иваннов Иван Иванович")
+    UserScreenRow(id = 1, role = 0, username = "Иваннов Иван Иванович", {})
 }
 
 @Preview
 @Composable
 fun prew4() {
-    UserScreenRow(id = 2, role = 1, username = "Иваннов Иван Иванович")
+    UserScreenRow(id = 2, role = 1, username = "Иваннов Иван Иванович", {})
 }
 
 @Preview
 @Composable
 fun prew5() {
-    UserScreenRow(id = 3, role = 2, username = "Иваннов Иван Иванович")
+    UserScreenRow(id = 3, role = 2, username = "Иваннов Иван Иванович", {})
 }

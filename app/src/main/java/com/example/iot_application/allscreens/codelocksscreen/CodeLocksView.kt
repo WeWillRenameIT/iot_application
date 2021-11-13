@@ -1,6 +1,7 @@
 package com.example.iot_application.allscreens.codelocksscreen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
@@ -23,6 +24,7 @@ fun CodeLockScreenRow(
     id: Int,
     name: String,
     description: String,
+    fnButton: ()->Unit
 ) {
     Surface(
         shape = RoundedCornerShape(10.dp),
@@ -31,6 +33,7 @@ fun CodeLockScreenRow(
             .fillMaxWidth()
             .height(70.dp)
             .background(Color.White)
+            .clickable { fnButton }
 
     ) {
         Row(
@@ -104,5 +107,5 @@ fun CodeLockScreenRow(
 @Preview
 @Composable
 fun prew3() {
-    CodeLockScreenRow(id = 1, name = "codeLock1", description = "Кодовый замок у передней двери школы номер 10 восточного крыла")
+    CodeLockScreenRow(id = 1, name = "codeLock1", description = "Кодовый замок у передней двери школы номер 10 восточного крыла",{})
 }

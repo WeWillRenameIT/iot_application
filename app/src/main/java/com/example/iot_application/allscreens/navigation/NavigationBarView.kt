@@ -24,7 +24,6 @@ import com.example.iot_application.R
 import com.example.iot_application.allscreens.Screens
 
 
-// TODO: 10.11.2021 ИЗМЕНИТЬ НА НОРМАЛЬНЫЙ ЭЛЕМЕНТ НАВИГАЦИИ
 @Composable
 fun NavigationBar(
     fnPeople: () -> Unit,

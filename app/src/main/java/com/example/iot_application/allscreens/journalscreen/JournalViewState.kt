@@ -1,9 +1,7 @@
 package com.example.iot_application.allscreens.journalscreen
 
 import android.util.Log
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -26,19 +24,18 @@ fun JournalScreenState(
 
     Log.e("JSS -> ", journalList.toString())
     var loadList by remember { mutableStateOf(true) }
-    if(loadList) {
+    if (loadList) {
         runBlocking {
             viewModel.getJournal(iotToken)
         }
         loadList = false
     }
-
     LazyColumn(
         contentPadding = PaddingValues(10.dp)
-    ){
-        items(journalList.size){
+    ) {
+        items(journalList.size) {
             JournalScreenRow(
-                id = it+1,
+                id = it + 1,
                 userId = journalList[it].User_id,
                 codeLockName = journalList[it].Codelock_name,
                 fio = journalList[it].Fio,
@@ -52,6 +49,7 @@ fun JournalScreenState(
         }
 
     }
+
 
 
     Log.e("JSS -> ", journalList.toString())
