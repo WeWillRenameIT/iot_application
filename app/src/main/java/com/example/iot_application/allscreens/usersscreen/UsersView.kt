@@ -31,7 +31,7 @@ fun UserScreenRow(
             .fillMaxWidth()
             .height(70.dp)
             .background(Color.White)
-            .clickable { fnButton }
+            .clickable(onClick = fnButton)
 
 
     ) {

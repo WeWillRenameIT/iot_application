@@ -18,11 +18,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.iot_application.allscreens.InfoScreen
 import com.example.iot_application.allscreens.Screens
+import com.example.iot_application.allscreens.addscreen.DetailAddViewState
 import com.example.iot_application.allscreens.authorisescreen.AuthoriseScreenState
 import com.example.iot_application.allscreens.codelocksscreen.CodeLocksScreenState
-import com.example.iot_application.allscreens.detailcodelockscreen.DetailUserViewState
+import com.example.iot_application.allscreens.detailcodelockscreen.DetailCodeLockViewState
 import com.example.iot_application.allscreens.infoscreen.InfoViewState
 import com.example.iot_application.allscreens.journalscreen.JournalScreenState
+import com.example.iot_application.allscreens.userdetailscreen.DetailUserViewState
 import com.example.iot_application.allscreens.usersscreen.UsersScreenState
 
 @Composable
@@ -33,7 +35,8 @@ fun NavigationScreenState(
 
     var selectedScreen by remember { mutableStateOf(2) }
     var iotToken by remember { mutableStateOf("") }
-
+    val (showAddDialog, setShowAddDialog) = remember { mutableStateOf(false) }
+    val (showLockDialog, setShowLockDialog) = remember { mutableStateOf(false) }
     //saveToken("", prefs)
     iotToken = getToken(prefs)
 
@@ -95,8 +98,8 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                //UsersScreenState(iotToken = iotToken,navController = navController)
-
+                UsersScreenState(iotToken = iotToken, showAddDialog = showAddDialog, setShowAddDialog = setShowAddDialog, fnButton = {  navController.navigate(Screens.DetailUserScreen.withArgs(iotToken)) })
+                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog)
             }
             composable(
                 route = Screens.JournalScreen.route + "/{iotToken}",
@@ -121,7 +124,8 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                //CodeLocksScreenState(iotToken = iotToken, navController = navController)
+                CodeLocksScreenState(iotToken = iotToken, setShowAddDialog = setShowAddDialog, fnButton = {  navController.navigate(Screens.DetailCodeLockScreen.withArgs(iotToken)) })
+                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog)
             }
 
             composable(
@@ -151,7 +155,7 @@ fun NavigationScreenState(
             }
 
             composable(
-                route = Screens.DetailUserScreen.route + "/{iotToken}",
+                route = Screens.DetailCodeLockScreen.route + "/{iotToken}",
                 arguments = listOf(
                     navArgument("iotToken") {
                         type = NavType.StringType
@@ -160,7 +164,7 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                DetailUserViewState()
+                DetailCodeLockViewState()
             }
 
         }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -33,13 +34,13 @@ fun CodeLockScreenRow(
             .fillMaxWidth()
             .height(70.dp)
             .background(Color.White)
-            .clickable { fnButton }
 
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxSize()
+                .clickable(onClick = fnButton)
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,

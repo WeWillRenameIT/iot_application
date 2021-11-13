@@ -18,7 +18,9 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun UsersScreenState(
     iotToken: String,
-    navController: NavHostController,
+    showAddDialog: Boolean,
+    setShowAddDialog: (Boolean)->Unit,
+    fnButton: ()->Unit,
     viewModel: UsersViewModel = hiltViewModel(),
 
 
@@ -46,9 +48,7 @@ fun UsersScreenState(
                 id = it + 1,
                 role = usersList[it].Role,
                 username = usersList[it].Fio,
-                fnButton = {
-                    navController.navigate(Screens.DetailUserScreen.withArgs(iotToken))
-                }
+                fnButton = fnButton
             )
         }
         items(1)
@@ -59,7 +59,9 @@ fun UsersScreenState(
     }
 
     // TODO: 13.11.2021 Добавление пользователя
-    PlusUserView({ })
+    PlusUserView(fnButton = {
+        setShowAddDialog(true)
+    })
 
 
     Log.e("JSS -> ", usersList.toString())

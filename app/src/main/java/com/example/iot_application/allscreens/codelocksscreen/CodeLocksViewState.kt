@@ -19,8 +19,9 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun CodeLocksScreenState(
     iotToken: String,
+    setShowAddDialog: (Boolean) -> Unit,
     viewModel: CodeLocksViewModel = hiltViewModel(),
-    navController: NavHostController
+    fnButton: ()->Unit
 
 ) {
     val codeLocksList by remember { viewModel.codeLocksList }
@@ -46,9 +47,7 @@ fun CodeLocksScreenState(
                 id = it+1,
                 name = codeLocksList[it].Name,
                 description = codeLocksList[it].Description,
-                fnButton = {
-                    navController.navigate(Screens.DetailCodeLockScreen.withArgs(iotToken))
-                }
+                fnButton = fnButton
             )
         }
         items(1)
@@ -58,7 +57,7 @@ fun CodeLocksScreenState(
 
     }
     // TODO: 13.11.2021 Добавление замка
-    PlusUserView({ })
+    PlusUserView(fnButton = {setShowAddDialog(true)})
 
     Log.e("JSS -> ", codeLocksList.toString())
 

@@ -4,7 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun DetailUserViewState() {
+fun DetailCodeLockViewState() {
 
     Text(text = "Детальный экран Замка")
 

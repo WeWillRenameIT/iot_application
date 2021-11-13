@@ -51,7 +51,6 @@ fun JournalScreenRow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .weight(24f)
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -109,7 +108,6 @@ fun JournalScreenRow(
                         }
 
                     }
-
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier
@@ -125,17 +123,17 @@ fun JournalScreenRow(
 
                         )
                     }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .weight(1f)
+                            .background(if (result == "Успешно") Color(0xFF51A84B) else Color(0xFFD8353C),)
+                    ) {
 
+                    }
                 }
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-                    .background(if (result == "Успешно") Color(0xFF51A84B) else Color(0xFFD8353C),)
-            ) {
 
-            }
         }
     }
     Spacer(modifier = Modifier.height(15.dp))

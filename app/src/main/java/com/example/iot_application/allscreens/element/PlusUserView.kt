@@ -35,8 +35,7 @@ fun PlusUserView(
                     shape = CircleShape,
                     clip = true
                 )
-
-                .clickable { fnButton }
+                .clickable(onClick = fnButton)
 
         ) {
             Box(
