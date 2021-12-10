@@ -26,4 +26,41 @@ interface IotApi {
         @Body requestBody: RequestBody
     ) : IotToken
 
+    @POST("add_user")
+    suspend fun postAddUser(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("add_codelock")
+    suspend fun postAddCodeLock(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("delete_user")
+    suspend fun postDeleteUser(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("edit_user")
+    suspend fun postEditUser(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("delete_codelock")
+    suspend fun postDeleteCodeLock(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("edit_codelock")
+    suspend fun postEditCodeLock(
+        @Body requestBody: RequestBody
+    ) : String
+
+    @POST("token_verify")
+    suspend fun postTokenVerify(
+        @Body requestBody: RequestBody
+    ) : String
+
+
+
 }

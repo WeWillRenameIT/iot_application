@@ -10,6 +10,11 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import com.google.gson.Gson
+
+import com.google.gson.GsonBuilder
+import retrofit2.converter.scalars.ScalarsConverterFactory
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,8 +29,13 @@ object AppModule {
     @Singleton
     @Provides
     fun provideIotApi(): IotApi {
+        val gson = GsonBuilder()
+            .setLenient()
+            .create()
+
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .baseUrl(BASE_URL)
             .build()
             .create(IotApi::class.java)

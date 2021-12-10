@@ -47,4 +47,20 @@ class AuthoriseViewModel @Inject constructor(
         return newIotToken
     }
 
+    suspend fun postTokenVerify(token: String): Resource<IotToken> {
+        //isLoading.value = true
+        val jsonObject = JSONObject()
+        jsonObject.put("token", token)
+        val jsonObjectString = jsonObject.toString()
+        val buuBodyRequest = jsonObjectString.toRequestBody("application/json".toMediaTypeOrNull())
+
+
+        var verify = repository.postAuthorise(buuBodyRequest)
+
+
+        Log.e("postAuthorise -> ", "${verify.data}")
+
+        return verify
+    }
+
 }

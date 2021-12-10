@@ -27,19 +27,22 @@ class UsersViewModel @Inject constructor(
     }
 
 
-    suspend fun getUsers(token: String) {
+    suspend fun getUsers(token: String) :String {
         //Log.e("JVM -> ", "RUNNN")
         isLoading.value = true
         val result = repository.getUsers(token)
-        Log.e("JVM -> ", "Error->result: ${result.message}")
+        Log.e("getUsers -> ", "Error->result: ${result.message}")
         when (result) {
             is Resource.Success -> {
                 //endReached.value = curPage * PAGE_SIZE >= result.data!!.count
                 val usersEntries = result.data!!.mapIndexed { index, entry ->
                     val id = entry.Id
-                    val username = entry.Fio
+                    val First_name = entry.First_name
+                    val Last_name = entry.Last_name
+                    val Patronym = entry.Patronym
+                    val Username = entry.Username
                     val role = entry.Role
-                    IotUsersItem(id, role, username)
+                    IotUsersItem(id, role, First_name,Last_name, Patronym, Username)
                 }
                 //curPage++
                 loadError.value = ""
@@ -48,10 +51,11 @@ class UsersViewModel @Inject constructor(
             }
             is Resource.Error -> {
                 loadError.value = result.message!!
-                Log.e("JVM -> ", "Error ${loadError.value}")
+                Log.e("getUsers -> ", "Error ${loadError.value}")
                 isLoading.value = false
             }
         }
+        return result.message ?: "200"
     }
 }
 

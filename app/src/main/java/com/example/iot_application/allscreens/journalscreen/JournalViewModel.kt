@@ -34,7 +34,7 @@ class JournalViewModel @Inject constructor(
         //Log.e("JVM -> ", "RUNNN")
         isLoading.value = true
         val result = repository.getJournal(token)
-        Log.e("JVM -> ", "Error->result: ${result.message}")
+        Log.e("getJournal -> ", "Error->result: ${result.message}")
         when (result) {
             is Resource.Success -> {
                 //endReached.value = curPage * PAGE_SIZE >= result.data!!.count
@@ -54,7 +54,7 @@ class JournalViewModel @Inject constructor(
             }
             is Resource.Error -> {
                 loadError.value = result.message!!
-                Log.e("JVM -> ", "Error ${loadError.value}")
+                Log.e("getJournal -> ", "Error ${loadError.value}")
                 isLoading.value = false
             }
         }

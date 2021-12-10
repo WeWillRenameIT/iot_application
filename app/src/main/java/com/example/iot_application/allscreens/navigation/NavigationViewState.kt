@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -26,27 +27,49 @@ import com.example.iot_application.allscreens.infoscreen.InfoViewState
 import com.example.iot_application.allscreens.journalscreen.JournalScreenState
 import com.example.iot_application.allscreens.userdetailscreen.DetailUserViewState
 import com.example.iot_application.allscreens.usersscreen.UsersScreenState
+import com.example.iot_application.data.remote.responses.IotCodeLockItem
+import com.example.iot_application.data.remote.responses.IotUsersItem
+import com.example.iot_application.util.Resource
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun NavigationScreenState(
     prefs: SharedPreferences,
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: NavigationModel = hiltViewModel()
 ) {
 
     var selectedScreen by remember { mutableStateOf(2) }
     var iotToken by remember { mutableStateOf("") }
+    var flagAuth by remember { mutableStateOf(false) }
     val (showAddDialog, setShowAddDialog) = remember { mutableStateOf(false) }
-    val (showLockDialog, setShowLockDialog) = remember { mutableStateOf(false) }
+
     //saveToken("", prefs)
     iotToken = getToken(prefs)
 
-    Log.e("NSS-3 -> ", "$iotToken")
+
+    if(iotToken!="") {
+        runBlocking {
+            var verify = viewModel.postTokenVerify(iotToken)
+            if(verify.data != "200"){
+                flagAuth = true
+            }
+        }
+
+    }
+    if(flagAuth) {
+        flagAuth = false
+        saveToken("", prefs)
+    }
+
+    Log.e("NVS-3 -> ", "$iotToken")
 
     Scaffold(
         bottomBar = {
             if(iotToken!= "")
             NavigationBar(
                 fnPeople = {
+                    setShowAddDialog(false)
                     selectedScreen = 1
                     navController.navigate(Screens.UsersScreen.withArgs(iotToken))
                 },
@@ -55,6 +78,7 @@ fun NavigationScreenState(
                     navController.navigate(Screens.JournalScreen.withArgs(iotToken))
                 },
                 fnLock = {
+                    setShowAddDialog(false)
                     selectedScreen = 3
                     navController.navigate(Screens.CodeLocksScreen.withArgs(iotToken))
                 },
@@ -76,7 +100,6 @@ fun NavigationScreenState(
                 route = Screens.AuthoriseScreen.route
             ) {
 
-                Log.e("NSS -> 1: ", "save token: $iotToken")
                 if(getToken(prefs)=="") {
                     iotToken=""
                     selectedScreen = 2
@@ -98,8 +121,16 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                UsersScreenState(iotToken = iotToken, showAddDialog = showAddDialog, setShowAddDialog = setShowAddDialog, fnButton = {  navController.navigate(Screens.DetailUserScreen.withArgs(iotToken)) })
-                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog)
+                UsersScreenState(
+                    iotToken = iotToken,
+                    showAddDialog = showAddDialog,
+                    setShowAddDialog = setShowAddDialog,
+                    navController = navController,
+                    fnButton = {
+                        navController.navigate(Screens.DetailUserScreen.withArgs(iotToken))
+
+                    })
+                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog, token = iotToken, userOrNot = true, navController = navController)
             }
             composable(
                 route = Screens.JournalScreen.route + "/{iotToken}",
@@ -124,8 +155,8 @@ fun NavigationScreenState(
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                CodeLocksScreenState(iotToken = iotToken, setShowAddDialog = setShowAddDialog, fnButton = {  navController.navigate(Screens.DetailCodeLockScreen.withArgs(iotToken)) })
-                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog)
+                CodeLocksScreenState(iotToken = iotToken, setShowAddDialog = setShowAddDialog, navController = navController)
+                DetailAddViewState(showDialog = showAddDialog, fnShowDialog = setShowAddDialog, token = iotToken, userOrNot = false, navController = navController)
             }
 
             composable(
@@ -142,29 +173,69 @@ fun NavigationScreenState(
             }
 
             composable(
-                route = Screens.DetailUserScreen.route + "/{iotToken}",
+                route = Screens.DetailUserScreen.route + "/{iotToken}/{First_name}/{Last_name}/{Patronym}/{Username}/{Id}/{Role}",
                 arguments = listOf(
                     navArgument("iotToken") {
+                        type = NavType.StringType
+                    },
+                    navArgument("First_name") {
+                        type = NavType.StringType
+                    },
+                    navArgument("Last_name") {
+                        type = NavType.StringType
+                    },
+                    navArgument("Patronym") {
+                        type = NavType.StringType
+                    },
+                    navArgument("Username") {
+                        type = NavType.StringType
+                    },
+                    navArgument("Id") {
+                        type = NavType.StringType
+                    },
+                    navArgument("Role") {
                         type = NavType.StringType
                     }
                 )
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                DetailUserViewState()
+                var user = IotUsersItem(
+                    First_name = entry.arguments?.getString("First_name")!!,
+                    Last_name = entry.arguments?.getString("Last_name")!!,
+                    Patronym = entry.arguments?.getString("Patronym")!!,
+                    Username = entry.arguments?.getString("Username")!!,
+                    Id = entry.arguments?.getString("Id")!!.toInt(),
+                    Role = entry.arguments?.getString("Role")!!.toInt()
+                )
+                DetailUserViewState(iotToken,user, fntest = {navController.navigate(Screens.UsersScreen.withArgs(iotToken))})
             }
 
             composable(
-                route = Screens.DetailCodeLockScreen.route + "/{iotToken}",
+                route = Screens.DetailCodeLockScreen.route + "/{iotToken}/{codelock_id}/{describe}/{name}",
                 arguments = listOf(
                     navArgument("iotToken") {
+                        type = NavType.StringType
+                    },
+                    navArgument("codelock_id") {
+                        type = NavType.StringType
+                    },
+                    navArgument("describe") {
+                        type = NavType.StringType
+                    },
+                    navArgument("name") {
                         type = NavType.StringType
                     }
                 )
             ) {
                     entry ->
                 iotToken = entry.arguments?.getString("iotToken")!!
-                DetailCodeLockViewState()
+                var codeLock = IotCodeLockItem(
+                    Id = entry.arguments?.getString("codelock_id")!!.toInt(),
+                    Description = entry.arguments?.getString("describe")!!,
+                    Name = entry.arguments?.getString("name")!!,
+                )
+                DetailCodeLockViewState(codeLock = codeLock, token = iotToken,fntest = {navController.navigate(Screens.CodeLocksScreen.withArgs(iotToken))} )
             }
 
         }

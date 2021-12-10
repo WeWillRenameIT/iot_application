@@ -127,7 +127,7 @@ fun JournalScreenRow(
                         modifier = Modifier
                             .fillMaxSize()
                             .weight(1f)
-                            .background(if (result == "Успешно") Color(0xFF51A84B) else Color(0xFFD8353C),)
+                            .background(if (result == "Успешная попытка") Color(0xFF51A84B) else Color(0xFFD8353C),)
                     ) {
 
                     }
